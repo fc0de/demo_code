@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <h2>Покупки</h2>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <form action="/purchases/add" method="post">
+    <button class="btn btn-primary" type="submit">Добавить покупку</button>
+   </form>
+  </div>
+  <h6>
+    Всего покупок: {{ purchases | length }}
+  </h6>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Дата покупки</th>
+          <th scope="col">ФИО покупателя</th>
+          <th scope="col">Товар</th>
+          <th scope="col">Количество</th>
+          <th scope="col">Стоимость единицы</th>
+          <th scope="col">Общая стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for item in purchases %}
+        <tr>
+          <td>{{ item.date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ item.customer.name }}</td>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.count }}</td>
+          <td>{{ item.product.sell_price }}</td>
+          <td>{{ item.product.sell_price*item.count }}</td>
+          <td>
+            <form action="/purchases/delete" method="post">
+              <input type="hidden" name="item_id" value="{{ item.id }}">
+              <button type="submit" class="btn-close" aria-label="Close"></button>
+            </form>
+          </td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <h2>Покупатели</h2>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <form action="/customers/add" method="post">
+      <button class="btn btn-primary" type="submit">Добавить клиента</button>
+    </form>
+  </div>
+  <h6>
+    Всего клиентов: {{ customers | length }}
+  </h6>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">ФИО</th>
+          <th scope="col">Дата регистрации</th>
+          <th scope="col">Пол</th>
+          <th scope="col">ПД</th>
+          <th scope="col">Дата рождения</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for user in customers %}
+        <tr>
+          <td>
+            <img src="data:image/jpeg;base64,{{ user.photo | b64encode }}" class="avatar" />
+          </td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.regist.strftime('%Y-%m-%d') }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.personal_info }}</td>
+          <td>{{ user.birth.strftime('%Y-%m-%d') }}</td>
+          <td>
+            <form action="/customers/delete" method="post">
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+              <button type="submit" class="btn-close" aria-label="Close"></button>
+            </form>
+          </td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

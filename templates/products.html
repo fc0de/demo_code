@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <h2>Товары</h2>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <form action="/products/add" method="post">
+    <button class="btn btn-primary" type="submit">Добавить товар</button>
+   </form>
+  </div>
+  <h6>
+    Всего товаров: {{ products | length }}
+  </h6>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Наименование</th>
+          <th scope="col">Закупочная стоимость, $</th>
+          <th scope="col">Стоимость продажи, $</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for item in products %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.purchase_price }}</td>
+          <td>{{ item.sell_price }}</td>
+          <td>
+            <form action="/products/delete" method="post">
+              <input type="hidden" name="item_id" value="{{ item.id }}">
+              <button type="submit" class="btn-close" aria-label="Close"></button>
+            </form>
+          </td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

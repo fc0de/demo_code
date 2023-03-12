@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<h2>Отчёт</h2>
+<h6>
+    Всего элементов: {{ report | length }}
+</h6>
+    <div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">ФИО покупателя</th>
+            <th scope="col">Суммарная стоимость покупок, $</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%- for item in report | sort(attribute='sum', reverse=True) %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.sum }}</td>
+        </tr>
+        {%- endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
