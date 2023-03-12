@@ -10,7 +10,7 @@
 git clone https://github.com/fc0de/demo_code.git
 
 # create and activate virtual environment
-python -m vevn venv
+python -m venv venv
 source venv/bin/activate
 
 # install dependencies
